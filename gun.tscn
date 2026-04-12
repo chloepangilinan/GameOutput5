@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://bh5pp5erjsre0"]
+
+[ext_resource type="PackedScene" uid="uid://bx77u6dfcijp7" path="res://Models/FBX/Weapons/Auto Shotgun.fbx" id="1_vk1bi"]
+
+[node name="Auto Shotgun" instance=ExtResource("1_vk1bi")]
