@@ -12,7 +12,6 @@ func _physics_process(delta: float) -> void:
 		queue_free()
 
 func _on_body_entered(body: Node3D) -> void:
-	# Ignore the player so the bullet doesn't explode in your face
 	if body.is_in_group("player") or body is CharacterBody3D:
 		return
 		
