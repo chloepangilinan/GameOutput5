@@ -1,6 +1,8 @@
-[gd_scene load_steps=26 format=4 uid="uid://bnyqhd2m0cqep"]
+[gd_scene load_steps=30 format=4 uid="uid://bnyqhd2m0cqep"]
 
 [ext_resource type="Texture2D" uid="uid://c8arnlq67qi7" path="res://third_person_controller_assets-main/textures/grids/Dark/texture_05.png" id="1_jyhfs"]
+[ext_resource type="Script" uid="uid://qaf5oiw6ygiy" path="res://scenes/zombie-spawner.gd" id="1_ya4ey"]
+[ext_resource type="PackedScene" uid="uid://basohj03cpgfk" path="res://scenes/zombie_enemy.tscn" id="2_eb6dy"]
 [ext_resource type="Texture2D" uid="uid://b58xv1joypxo5" path="res://third_person_controller_assets-main/textures/grids/Orange/texture_09.png" id="2_tbgi4"]
 [ext_resource type="Texture2D" uid="uid://cm5m7nr7dugjd" path="res://third_person_controller_assets-main/textures/grids/Purple/texture_09.png" id="3_tefeu"]
 [ext_resource type="Texture2D" uid="uid://djg8y25y06h5n" path="res://third_person_controller_assets-main/textures/grids/Green/texture_09.png" id="4_o6xl0"]
@@ -913,7 +915,13 @@ _data = {
 [sub_resource type="QuadMesh" id="QuadMesh_85g3d"]
 size = Vector2(4, 20)
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_ya4ey"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_eb6dy"]
+
 [node name="world" type="Node3D"]
+script = ExtResource("1_ya4ey")
+zombie_scene = ExtResource("2_eb6dy")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
@@ -1496,3 +1504,16 @@ modulate = Color(0, 1, 1, 1)
 position = Vector2(-15, 0)
 rotation = 1.5707964
 mesh = SubResource("QuadMesh_85g3d")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_ya4ey")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/StaticBody3D"]
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/StaticBody3D"]
+shape = SubResource("CapsuleShape3D_eb6dy")
+
+[node name="ZombieEnemy" parent="." instance=ExtResource("2_eb6dy")]
