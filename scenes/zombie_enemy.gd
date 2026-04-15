@@ -100,7 +100,6 @@ func die() -> void:
 	if nav_agent:
 		nav_agent.set_physics_process(false)
 
-	# Optional: play a death animation first if you have one
 	if anim_player and anim_player.has_animation("mixamo_com_002"):
 		anim_player.play("mixamo_com_002")
 		await get_tree().create_timer(0.35).timeout
@@ -108,7 +107,6 @@ func die() -> void:
 	await _crumble_and_disappear()
 
 func _crumble_and_disappear() -> void:
-	# Make it look darker before collapsing
 	for mesh in mesh_nodes:
 		for i in range(mesh.get_surface_override_material_count()):
 			var mat = mesh.get_surface_override_material(i)
@@ -124,14 +122,11 @@ func _crumble_and_disappear() -> void:
 	var tween = create_tween()
 	tween.set_parallel(true)
 
-	# Tilt/fall sideways
 	tween.tween_property(zombie_visual, "rotation_degrees:x", zombie_visual.rotation_degrees.x + 85.0, 0.45)
 	tween.tween_property(zombie_visual, "rotation_degrees:z", zombie_visual.rotation_degrees.z + 20.0, 0.45)
 
-	# Sink a bit
 	tween.tween_property(zombie_visual, "position:y", zombie_visual.position.y - 0.6, 0.45)
 
-	# Shrink like crumbling
 	tween.tween_property(zombie_visual, "scale", Vector3(0.15, 0.15, 0.15), 0.45)
 
 	await tween.finished

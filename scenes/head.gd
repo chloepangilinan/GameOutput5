@@ -34,13 +34,15 @@ func _input(event: InputEvent) -> void:
 		
 func shoot():
 	var b = bullet.instantiate()
-	get_tree().root.add_child(b)
+	owner.add_child(b)
 	
 	b.global_position = gun.global_position
 	
+	if "player_velocity" in b:
+		b.player_velocity = player.velocity
+	
 	if raycast.is_colliding():
 		b.look_at(raycast.get_collision_point())
-		
-	else: 
-		var target = raycast.global_position + (raycast.global_transform.basis.z * -50)
+	else:
+		var target = raycast.global_position + (-raycast.global_transform.basis.z * 100.0)
 		b.look_at(target)
