@@ -23,11 +23,9 @@ func die() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	# Gravity
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
-	# Follow the player
 	if player:
 		nav.target_position = player.global_position
 		var next_position = nav.get_next_path_position()

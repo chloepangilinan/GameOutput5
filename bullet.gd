@@ -21,6 +21,10 @@ func spawn_explosion() -> void:
 func _on_body_entered(body: Node3D) -> void:
 	if body.is_in_group("player"):
 		return
+	
+	if body.is_in_group("ignore_explosion"):
+		queue_free()
+		return
 
 	var target: Node = body
 	while target != null and not target.has_method("take_damage"):
@@ -28,9 +32,6 @@ func _on_body_entered(body: Node3D) -> void:
 
 	if target != null and target.has_method("take_damage"):
 		target.take_damage(damage)
-		spawn_explosion()
-		queue_free()
-		return
-
+	
 	spawn_explosion()
 	queue_free()
