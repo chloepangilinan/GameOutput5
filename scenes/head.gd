@@ -37,7 +37,7 @@ func shoot():
 	owner.add_child(b)
 	
 	b.global_position = gun.global_position
-	
+
 	if "player_velocity" in b:
 		b.player_velocity = player.velocity
 	

@@ -20,17 +20,6 @@ func _ready() -> void:
 	add_to_group("zombies")
 	_collect_meshes(zombie_visual)
 
-	if anim_player:
-		if anim_player.has_animation("mixamo_com_001"):
-			var run_anim = anim_player.get_animation("mixamo_com_001")
-			if run_anim:
-				run_anim.loop_mode = Animation.LOOP_LINEAR
-			anim_player.play("mixamo_com_001")
-		else:
-			print("Run animation mixamo_com_001 not found")
-	else:
-		print("AnimationPlayer2 not found")
-
 func _physics_process(delta: float) -> void:
 	if is_dead:
 		velocity = Vector3.ZERO

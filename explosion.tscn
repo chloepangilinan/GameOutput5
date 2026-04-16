@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://ck0eqppsay66q"]
+
+[ext_resource type="Script" uid="uid://cedk5s560lue" path="res://explosion.gd" id="1_q7epf"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vxas0"]
+initial_velocity_min = 3.0
+initial_velocity_max = 6.0
+scale_min = 0.19999999
+scale_max = 0.5
+color = Color(1, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q7epf"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+billboard_mode = 1
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_j4sxf"]
+material = SubResource("StandardMaterial3D_q7epf")
+size = Vector2(0.2, 0.2)
+
+[node name="Explosion" type="Node3D"]
+script = ExtResource("1_q7epf")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 25
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_vxas0")
+draw_pass_1 = SubResource("PlaneMesh_j4sxf")

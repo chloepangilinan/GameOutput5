@@ -1,11 +1,8 @@
-[gd_scene load_steps=30 format=4 uid="uid://bnyqhd2m0cqep"]
+[gd_scene load_steps=31 format=4 uid="uid://bnyqhd2m0cqep"]
 
 [ext_resource type="Script" uid="uid://qaf5oiw6ygiy" path="res://scenes/zombie-spawner.gd" id="1_ya4ey"]
 [ext_resource type="PackedScene" uid="uid://basohj03cpgfk" path="res://scenes/zombie_enemy.tscn" id="2_eb6dy"]
-[ext_resource type="Texture2D" uid="uid://b58xv1joypxo5" path="res://third_person_controller_assets-main/textures/grids/Orange/texture_09.png" id="2_tbgi4"]
-[ext_resource type="Texture2D" uid="uid://cm5m7nr7dugjd" path="res://third_person_controller_assets-main/textures/grids/Purple/texture_09.png" id="3_tefeu"]
 [ext_resource type="Texture2D" uid="uid://c1ugvwnopdjgn" path="res://Grass001_1K-JPG/Grass001_1K-JPG_Color.jpg" id="3_ya4ey"]
-[ext_resource type="Texture2D" uid="uid://djg8y25y06h5n" path="res://third_person_controller_assets-main/textures/grids/Green/texture_09.png" id="4_o6xl0"]
 [ext_resource type="Script" uid="uid://b3occxrbsn6ny" path="res://scenes/character_body_3d.gd" id="5_tipki"]
 [ext_resource type="Texture2D" uid="uid://bffwhpxjuu6r2" path="res://Shooter Pack/Ch29_nonPBR_0.png" id="7_85g3d"]
 [ext_resource type="Texture2D" uid="uid://bmeyg7mgl5bhk" path="res://Shooter Pack/Ch29_nonPBR_3.png" id="8_choun"]
@@ -14,8 +11,8 @@
 [ext_resource type="Texture2D" uid="uid://c5ucrboylflu4" path="res://crosshair.png" id="12_eb6dy"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_eb6dy"]
-sky_top_color = Color(0, 0.5359686, 0.94938666, 1)
-sky_horizon_color = Color(0.6679923, 0.8229379, 0.87087315, 1)
+sky_top_color = Color(0.77248734, 0.20525184, 0.030157765, 1)
+sky_horizon_color = Color(0.78150004, 0.81726366, 0.6164674, 1)
 
 [sub_resource type="Sky" id="Sky_trceg"]
 sky_material = SubResource("ProceduralSkyMaterial_eb6dy")
@@ -33,16 +30,24 @@ fog_density = 0.001
 albedo_texture = ExtResource("3_ya4ey")
 uv1_triplanar = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eb6dy"]
-albedo_texture = ExtResource("2_tbgi4")
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jkv2x"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_trceg"]
-albedo_texture = ExtResource("3_tefeu")
-uv1_triplanar = true
+[sub_resource type="BoxShape3D" id="BoxShape3D_jbj1t"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a8y0u"]
-albedo_texture = ExtResource("4_o6xl0")
-uv1_triplanar = true
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_85g3d"]
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 0, 0.21960784, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_muem4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_choun"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ya4ey"]
+albedo_color = Color(0.88235295, 0.050980393, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_eb6dy"]
+size = Vector3(3, 3, 2)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_85g3d"]
 
@@ -935,22 +940,36 @@ material_override = SubResource("StandardMaterial3D_jkv2x")
 use_collision = true
 size = Vector3(1000, 1, 1000)
 
-[node name="box1" type="CSGBox3D" parent="map"]
-transform = Transform3D(0.719461, 0, -0.6945328, 0, 1, 0, 0.6945328, 0, 0.719461, 4.720357, 0.5, 0)
-material_override = SubResource("StandardMaterial3D_eb6dy")
-use_collision = true
+[node name="box1_body" type="StaticBody3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.72, 0.5, 0)
+physics_material_override = SubResource("PhysicsMaterial_jkv2x")
 
-[node name="box2" type="CSGBox3D" parent="map"]
-transform = Transform3D(-0.91776156, 0, 0.39713186, 0, 1, 0, -0.39713186, 0, -0.91776156, 0.6069603, 0.9779309, 6.956048)
-material_override = SubResource("StandardMaterial3D_trceg")
-use_collision = true
-size = Vector3(2, 2, 2)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="map/box1_body"]
+shape = SubResource("BoxShape3D_jbj1t")
 
-[node name="box3" type="CSGBox3D" parent="map"]
-transform = Transform3D(0.11237079, 0, -0.9936663, 0, 1, 0, 0.9936663, 0, 0.11237079, -4.1227093, 1.493997, -4.7683716e-07)
-material_override = SubResource("StandardMaterial3D_a8y0u")
-use_collision = true
-size = Vector3(3, 3, 3)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="map/box1_body"]
+material_override = SubResource("StandardMaterial3D_85g3d")
+mesh = SubResource("BoxMesh_muem4")
+
+[node name="box2_body" type="StaticBody3D" parent="map"]
+transform = Transform3D(-0.9177546, 0, 0.39714795, 0, 1, 0, -0.39714795, 0, -0.9177546, 0.607, 0.978, 6.95)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="map/box2_body"]
+shape = SubResource("BoxShape3D_choun")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="map/box2_body"]
+material_override = SubResource("StandardMaterial3D_ya4ey")
+mesh = SubResource("BoxMesh_eb6dy")
+
+[node name="box3_body" type="StaticBody3D" parent="map"]
+transform = Transform3D(-0.9177546, 0, 0.39714795, 0, 1, 0, -0.39714795, 0, -0.9177546, -10.37743, 0.978, 0.43174934)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="map/box3_body"]
+shape = SubResource("BoxShape3D_choun")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="map/box3_body"]
+material_override = SubResource("StandardMaterial3D_ya4ey")
+mesh = SubResource("BoxMesh_eb6dy")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 
