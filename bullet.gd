@@ -30,7 +30,3 @@ func _on_body_entered(body: Node3D) -> void:
 		target.take_damage(damage)
 		spawn_explosion()
 		queue_free()
-		return
-
-	spawn_explosion()
-	queue_free()
